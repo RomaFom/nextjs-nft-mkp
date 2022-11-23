@@ -1,12 +1,18 @@
-import React from "react";
+import { cookies } from "next/headers";
+import React, { Suspense } from "react";
 
-type Props = {};
+import MainFeed from "@/app/components/Feed/MainFeed";
 
-const Page: React.FC<Props> = ({}) => {
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export default async function Page() {
   return (
     <>
+      <Suspense fallback={<p>Loading...</p>}>
+        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+        {/* @ts-ignore  */}
+        <MainFeed />
+      </Suspense>
       <p className="text-2xl underline">HELLO</p>
     </>
   );
-};
-export default Page;
+}

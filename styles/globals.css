@@ -24,7 +24,11 @@ a {
     color-scheme: dark;
   }
   body {
+    @apply bg-total-dark;
     color: white;
-    background: black;
   }
+}
+
+.invalid {
+  @apply border-red-600 !important;
 }
