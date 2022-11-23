@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import React, { Suspense } from "react";
 
 import MainFeed from "@/app/components/Feed/MainFeed";

@@ -1,28 +1,62 @@
 "use client";
-import { createContext, useContext } from "react";
+import { useRouter } from "next/navigation";
+import React, { useCallback, useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 
-export interface IUserState {
-  id: number;
-  username: string;
-  token: string;
-}
+import {
+  IUserState,
+  UserContext,
+} from "@/app/providers/UserProvider/UserContext";
+import { IUserDataResponse } from "@/utils/api/types";
 
-type UserContextType = {
-  user: IUserState | null;
-  setUser: (user: IUserState | null) => void;
-  clearUser: () => void;
+type Props = {
+  children: React.ReactNode;
 };
-const UserContextDefaultValues: UserContextType = {
-  user: null,
-  setUser: () => null,
-  clearUser: () => null,
-};
+const UserProvider: React.FC<Props> = ({ children }) => {
+  const [cookie, setCookie, removeCookie] = useCookies(["tokenData"]);
+  const router = useRouter();
+  const [ctxUser, setCtxUser] = useState<IUserState | null>(null);
 
-export const UserContext = createContext<UserContextType>(
-  UserContextDefaultValues
-);
+  const handleLogout = useCallback(() => {
+    removeCookie("tokenData");
+    setCtxUser(null);
+    router.push("/");
+  }, []);
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const useUser = () => {
-  return useContext(UserContext);
+  const userValues = {
+    user: ctxUser,
+    setUser: setCtxUser,
+    clearUser: handleLogout,
+  };
+
+  useEffect(() => {
+    if (!cookie.tokenData) {
+      router.push("/");
+    } else {
+      fetch("/api/auth/get-user", {
+        method: "GET",
+        headers: {
+          Authorization: cookie.tokenData,
+        },
+      })
+        .then((res) => res.json())
+        .then((data: IUserDataResponse) => {
+          if (data.status >= 400 || !data.data) {
+            handleLogout();
+            return;
+          }
+          const newUser = {
+            ...data.data,
+            token: cookie.tokenData,
+          };
+          setCtxUser(newUser);
+        });
+    }
+  }, [cookie]);
+  return (
+    <>
+      <UserContext.Provider value={userValues}>{children}</UserContext.Provider>
+    </>
+  );
 };
+export default UserProvider;

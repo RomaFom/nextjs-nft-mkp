@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import { BsChevronDown } from "react-icons/bs";
 
-import { useUser } from "@/app/providers/UserProvider/UserProvider";
+import { useUser } from "@/app/providers/UserProvider/UserContext";
 
 import styles from "./NavBar.module.scss";
 

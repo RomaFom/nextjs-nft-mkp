@@ -12,13 +12,14 @@ import {
   loginSchema,
 } from "@/app/components/Forms/LoginForm/types";
 import InputWrapper from "@/app/components/InputWrapper";
-import { useUser } from "@/app/providers/UserProvider/UserProvider";
+import { useUser } from "@/app/providers/UserProvider/UserContext";
 import { IUserDataResponse, IUserResponse } from "@/utils/api/types";
 import { basicError } from "@/utils/notifications/notificationsCenter";
 const Login: React.FC = () => {
   const [cookie, setCookie] = useCookies(["tokenData"]);
   const router = useRouter();
   const { user, setUser } = useUser();
+  console.log("user", user);
   const {
     register,
     handleSubmit,

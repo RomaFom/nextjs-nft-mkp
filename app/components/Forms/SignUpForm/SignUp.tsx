@@ -12,7 +12,7 @@ import {
   signUpSchema,
 } from "@/app/components/Forms/SignUpForm/types";
 import InputWrapper from "@/app/components/InputWrapper";
-import { useUser } from "@/app/providers/UserProvider/UserProvider";
+import { useUser } from "@/app/providers/UserProvider/UserContext";
 import { IUserResponse } from "@/utils/api/types";
 import { basicError } from "@/utils/notifications/notificationsCenter";
 

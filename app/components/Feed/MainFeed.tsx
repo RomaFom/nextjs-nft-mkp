@@ -21,7 +21,6 @@ async function getFeed(): Promise<NFT[]> {
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export default async function MainFeed() {
   const feed = await getFeed();
-  console.log("feed");
   return (
     <>
       <div className="fill-emerald-200">
