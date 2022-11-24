@@ -1,87 +1,151 @@
 {
-  "root": true,
   "env": {
+    "browser": true,
+    "commonjs": true,
     "es2021": true,
     "node": true
   },
+
   "extends": [
     "eslint:recommended",
-    "plugin:import/recommended",
-    "plugin:jsx-a11y/recommended",
     "plugin:react/recommended",
-    "plugin:react/jsx-runtime",
     "plugin:react-hooks/recommended",
-    "prettier",
+    "plugin:prettier/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
     "next/core-web-vitals"
   ],
-  "overrides": [
-    {
-      "files": ["**/*.ts?(x)"],
-      "parser": "@typescript-eslint/parser",
-      "extends": [
-        "plugin:@typescript-eslint/recommended",
-        "plugin:import/typescript"
-      ]
-    }
-  ],
-  "plugins": ["simple-import-sort", "prettier", "@typescript-eslint"],
-  "parser": "@typescript-eslint/parser",
+
   "parserOptions": {
-    "tsconfigRootDir": ".",
-    "ecmaVersion": "latest",
-    "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true
-    }
-  },
-  "settings": {
-    "import/parsers": {
-      "@typescript-eslint/parser": [".ts", ".tsx"]
     },
-    "import/resolver": {
-      "typescript": {},
-      "node": {
-        "paths": ["src"],
-        "extensions": [".js", ".jsx", ".ts", ".tsx"]
-      }
-    },
-    "react": {
-      "version": "detect"
-    }
+    "ecmaVersion": 12,
+    "sourceType": "module"
   },
+  "plugins": ["react","prettier","autofix","@typescript-eslint","react-hooks"],
+
   "rules": {
-    "react/display-name": "off",
-    "prettier/prettier": ["error", {}, { "usePrettierrc": true }],
-    "arrow-parens": 0,
-    "no-debugger": 1,
-    "no-unused-vars": 0,
-    "no-warning-comments": [
-      1,
+    // Possible errors
+    "no-console": "warn",
+    // Best practices
+    "dot-notation": "error",
+    "no-else-return": "error",
+    "no-floating-decimal": "error",
+    "no-sequences": "error",
+    // Stylistic
+    "array-bracket-spacing": "error",
+    "computed-property-spacing": ["error", "never"],
+    "curly": "error",
+    "no-lonely-if": "error",
+    "no-unneeded-ternary": "error",
+    "one-var-declaration-per-line": "error",
+    "quotes": [
+      "error",
+      "single",
       {
-        "terms": ["hardcoded"],
-        "location": "anywhere"
+        "allowTemplateLiterals": false,
+        "avoidEscape": true
       }
     ],
-    "no-console": [
-      1,
+    // ES6
+    "array-callback-return": "off",
+    "prefer-const": "error",
+    "arrow-body-style": ["error", "as-needed"],
+    // Imports
+    "import/prefer-default-export": "off",
+    "sort-imports": [
+      "error",
       {
-        "allow": ["warn", "error"]
+        "ignoreCase": true,
+        "ignoreDeclarationSort": true
       }
     ],
-    "no-return-await": 0,
-    "object-curly-spacing": ["error", "always"],
-    "simple-import-sort/imports": "error",
-    "simple-import-sort/exports": "error",
-    "no-var": "error",
-    "comma-dangle": [1, "always-multiline"],
-    "linebreak-style": ["error", "unix"],
-    "@typescript-eslint/no-non-null-assertion": "off",
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "parent",
+          "sibling",
+          "index",
+          "object",
+          "type"
+        ],
+        "pathGroups": [
+          {
+            "pattern": "@/**/**",
+            "group": "parent",
+            "position": "before"
+          }
+        ],
+        "alphabetize": { "order": "asc" }
+      }
+    ],
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": ["../"]
+      }
+    ],
+    "no-unused-expressions": "off",
+    "no-prototype-builtins": "off",
+    //     "autofix/no-unused-vars": [
+    //       "error",
+    //       {
+    //         "argsIgnorePattern": "^_",
+    //         "ignoreRestSiblings": true,
+    //         "destructuredArrayIgnorePattern": "^_"
+    //       }
+    //      ],
+    // REACT
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off",
+    "jsx-a11y/href-no-hash": [0],
+    "react/display-name": 0,
+    "react/no-deprecated": "error",
+    "react/no-unsafe": [
+      "error",
+      {
+        "checkAliases": true
+      }
+    ],
+    "react/jsx-sort-props": [
+      "error",
+      {
+        "ignoreCase": true
+      }
+    ],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "react/button-has-type": "error",
+    "react/no-array-index-key": "error",
+    "react/self-closing-comp": ["error", { "component": true, "html": true }],
+    // Prettier
+    // eslint looks for the prettier config at the top level of the package/app
+    // but the config lives in the `config/` directory. Passing the config here
+    // to get around this.
+    //    "prettier/prettier": ["error"]
+    "prettier/prettier": [
+      "error",
+      {},
+      {
+        "usePrettierrc": true
+      }
+    ],
+
+    // Typescript
     "@typescript-eslint/explicit-function-return-type": [
       "error",
       {
         "allowExpressions": true
       }
     ]
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
   }
 }
-
