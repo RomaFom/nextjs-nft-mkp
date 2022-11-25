@@ -1,9 +1,9 @@
-import { useWeb3 } from '@3rdweb/hooks';
 import cn from 'classnames';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
 import { BsChevronDown } from 'react-icons/bs';
+import useWeb3 from '@/hooks/useWeb3';
 
 import { useUser } from '@/ignoreFolder/providers/UserProvider/UserContext';
 import { cropAddress } from '@/utils/helpers/address';
@@ -12,7 +12,8 @@ import styles from './NavBar.module.scss';
 
 const NavBar: React.FC = () => {
     const [menuOpen, setMenuOpen] = useState(false);
-    const { address, connectWallet } = useWeb3();
+    const { account, web3Handler } = useWeb3();
+
     const { user, clearUser } = useUser();
     return (
         <header className={menuOpen ? styles.open : ''}>
@@ -88,13 +89,13 @@ const NavBar: React.FC = () => {
                             'rounded-md border-sky-700 border-2 px-3 py-1 right-0'
                         }
                         onClick={async () => {
-                            if (!address) {
-                                await connectWallet('injected');
+                            if (!account) {
+                                await web3Handler();
                             }
                         }}
                         type={'button'}
                     >
-                        {address ? cropAddress(address, 8) : 'Connect Wallet'}
+                        {account ? cropAddress(account, 8) : 'Connect Wallet'}
                     </button>
                 </div>
             </nav>

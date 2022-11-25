@@ -10,9 +10,6 @@
     "lint:fix": "next lint --fix"
   },
   "dependencies": {
-    "@3rdweb/hooks": "^1.9.2",
-    "@3rdweb/react": "^1.9.3",
-    "@3rdweb/sdk": "^1.42.1",
     "@hookform/resolvers": "^2.9.10",
     "@tanstack/react-query": "^4.16.1",
     "@tanstack/react-query-devtools": "^4.16.1",
@@ -23,6 +20,7 @@
     "classnames": "^2.3.2",
     "eslint": "8.28.0",
     "eslint-config-next": "^13.0.4",
+    "ethers": "^5.7.2",
     "next": "^13.0.4",
     "react": "^18.2.0",
     "react-cookie": "^4.1.1",
