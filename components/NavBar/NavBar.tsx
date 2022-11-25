@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
 import { BsChevronDown } from 'react-icons/bs';
 import useWeb3 from '@/hooks/useWeb3';
+import { useUser } from '@/providers/UserProvider/UserContext';
 
-import { useUser } from '@/ignoreFolder/providers/UserProvider/UserContext';
 import { cropAddress } from '@/utils/helpers/address';
 
 import styles from './NavBar.module.scss';

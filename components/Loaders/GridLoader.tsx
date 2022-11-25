@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { NftGrid } from '@/ignoreFolder/components/NftGrid/NftGrid';
+import { NftGrid } from '@/components/NftGrid/NftGrid';
 
 /* eslint-disable */
 const SkeletonItem:React.FC = () => {

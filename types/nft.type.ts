@@ -4,6 +4,7 @@ export interface NFT {
     nftAddress: string;
     price: number;
     listingPrice: number;
+    finalPrice: number;
     seller: string;
     isSold: boolean;
     metadata: {

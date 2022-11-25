@@ -3,13 +3,14 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ethers } from 'ethers';
 import React from 'react';
 import NavBar from '@/components/NavBar/NavBar';
+import 'regenerator-runtime/runtime';
+import Toast from '@/components/ToastContainer/Toast';
+
 import { Marketplace } from '@/contract-integration/marketplace';
 import useWeb3 from '@/hooks/useWeb3';
-
-import 'regenerator-runtime/runtime';
-import Toast from '@/ignoreFolder/components/ToastContainer/Toast';
-import UserProvider from '@/ignoreFolder/providers/UserProvider/UserProvider';
 import { DappContext, IDappCtx } from '@/providers/DappContext';
+import UserProvider from '@/providers/UserProvider/UserProvider';
+
 type Props = {
     children: React.ReactNode;
 };

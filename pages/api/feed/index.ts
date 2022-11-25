@@ -8,13 +8,11 @@ export default async function handler(
 ): Promise<void> {
     try {
         const response = await axios.get(process.env.CORE_API + 'web3/items');
-        console.log(response);
         if (response.status >= 400) {
             return res.status(response.status).send(response.data as NFT[]);
         }
         res.status(200).send(response.data as NFT[]);
     } catch (error) {
-        console.log(error);
         res.status(500);
     }
 }

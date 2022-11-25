@@ -1,11 +1,11 @@
 import React from 'react';
+import Card from '@/components/Card/Card';
+import { GridLoader } from '@/components/Loaders/GridLoader';
+import { NftGrid } from '@/components/NftGrid/NftGrid';
 import { useGetFeed } from '@/hooks/react-query/useGetFeed';
-import Card from '@/ignoreFolder/components/Card/Card';
-import { GridLoader } from '@/ignoreFolder/components/Loaders/GridLoader';
-import { NftGrid } from '@/ignoreFolder/components/NftGrid/NftGrid';
 
 const MainFeed: React.FC = () => {
-    const { data, isLoading, error } = useGetFeed();
+    const { data, isLoading, error, refetch } = useGetFeed();
 
     return (
         <>
@@ -14,7 +14,7 @@ const MainFeed: React.FC = () => {
                 <NftGrid>
                     {data &&
                         data.map(item => (
-                            <Card item={item} key={item.itemId} />
+                            <Card cb={refetch} item={item} key={item.itemId} />
                         ))}
                 </NftGrid>
             </div>

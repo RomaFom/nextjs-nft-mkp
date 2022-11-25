@@ -1,12 +1,8 @@
-'use client';
 import { useRouter } from 'next/navigation';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
-
-import {
-    IUserState,
-    UserContext,
-} from '@/ignoreFolder/providers/UserProvider/UserContext';
+import { IUserState } from '@/providers/UserProvider/UserContext';
+import { UserContext } from '@/providers/UserProvider/UserContext';
 import { IUserDataResponse } from '@/utils/api/types';
 
 type Props = {

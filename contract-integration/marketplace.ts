@@ -21,15 +21,23 @@ export class Marketplace {
     }
 
     async buyItem(
-        itemId: ethers.BigNumber,
-        price: ethers.BigNumber,
-    ): Promise<ethers.ContractReceipt> {
-        return await (
-            await this.contract.buyItem(itemId, {
-                value: price,
-                gasLimit: 1000000,
-            })
-        ).wait();
+        itemId: string,
+        price: string,
+        // itemId: ethers.BigNumber,
+        // price: ethers.BigNumber,
+    ): Promise<ethers.ContractReceipt | null> {
+        try {
+            const toWei = ethers.utils.parseEther(price);
+            return await (
+                await this.contract.buyItem(itemId, {
+                    value: toWei,
+                    gasLimit: 1000000,
+                })
+            ).wait();
+        } catch (error) {
+            console.log(error);
+            return null;
+        }
     }
 
     //   const totalPrice = await marketplaceContract?.getFinalPrice(

@@ -5,13 +5,10 @@ import React, { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import { useForm } from 'react-hook-form';
 
-import Button from '@/ignoreFolder/components/Button/Button';
-import {
-    ILoginForm,
-    loginSchema,
-} from '@/ignoreFolder/components/Forms/LoginForm/types';
-import InputWrapper from '@/ignoreFolder/components/InputWrapper';
-import { useUser } from '@/ignoreFolder/providers/UserProvider/UserContext';
+import Button from '@/components/Button/Button';
+import { ILoginForm, loginSchema } from '@/components/Forms/LoginForm/types';
+import InputWrapper from '@/components/InputWrapper';
+import { useUser } from '@/providers/UserProvider/UserContext';
 import { IUserDataResponse, IUserResponse } from '@/utils/api/types';
 import { basicError } from '@/utils/notifications/notificationsCenter';
 const Login: React.FC = () => {
