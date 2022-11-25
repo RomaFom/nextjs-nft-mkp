@@ -1,4 +1,3 @@
-'use client';
 import { useQuery } from '@tanstack/react-query';
 import { getFeed } from '@/hooks/react-query/fetcher/feed-fetcher';
 

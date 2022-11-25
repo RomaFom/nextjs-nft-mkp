@@ -123,7 +123,7 @@
     "react/no-array-index-key": "error",
     "react/self-closing-comp": ["error", { "component": true, "html": true }],
     // Prettier
-    // eslint looks for the prettier config at the top level of the package/app
+    // eslint looks for the prettier config at the top level of the package/ignoreFolder
     // but the config lives in the `config/` directory. Passing the config here
     // to get around this.
     //    "prettier/prettier": ["error"]

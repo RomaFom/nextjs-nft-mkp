@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
-import { IFormInputValues } from '@/app/components/Forms/SignUpForm/types';
+import { IFormInputValues } from '@/ignoreFolder/components/Forms/SignUpForm/types';
 import { ApiAuth } from '@/utils/api';
 import { IUserResponse } from '@/utils/api/types';
 import type { NextApiRequest, NextApiResponse } from 'next';
