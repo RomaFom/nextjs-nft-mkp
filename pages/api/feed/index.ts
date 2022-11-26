@@ -7,7 +7,10 @@ export default async function handler(
     res: NextApiResponse<NFT[]>,
 ): Promise<void> {
     try {
-        const response = await axios.get(process.env.CORE_API + 'web3/items');
+        const { page, size } = req.query;
+        const response = await axios.get(
+            process.env.CORE_API + `web3/items?page=${page}&size=${size}`,
+        );
         if (response.status >= 400) {
             return res.status(response.status).send(response.data as NFT[]);
         }
