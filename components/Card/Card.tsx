@@ -6,12 +6,12 @@ import React from 'react';
 
 import { useDapp } from '@/providers/DappContext';
 import { useUser } from '@/providers/UserProvider/UserContext';
-import { NFT } from '@/types/nft.type';
+import { MarketplaceItemDto } from '@/types/nft.type';
 
 import styles from './Card.module.scss';
 
 type Props = {
-    item: NFT;
+    item: MarketplaceItemDto;
     cb?: () => void;
 };
 
@@ -53,7 +53,6 @@ const Card: React.FC<Props> = ({ item, cb }) => {
                                         item.finalPrice.toString(),
                                     );
                                     cb && cb();
-                                    console.log('Buy NFT');
                                 }
                             }}
                             type={'button'}

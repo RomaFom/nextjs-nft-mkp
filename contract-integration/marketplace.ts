@@ -1,5 +1,5 @@
 import { ethers } from 'ethers';
-import { NFT } from '@/types/nft.type';
+import { MarketplaceItemDto } from '@/types/nft.type';
 
 export class Marketplace {
     contract: ethers.Contract;
@@ -12,7 +12,7 @@ export class Marketplace {
         return count.toNumber();
     }
 
-    async items(index: number): Promise<NFT> {
+    async items(index: number): Promise<MarketplaceItemDto> {
         return await this.contract.items(index);
     }
 
@@ -21,10 +21,8 @@ export class Marketplace {
     }
 
     async buyItem(
-        itemId: string,
+        itemId: number,
         price: string,
-        // itemId: ethers.BigNumber,
-        // price: ethers.BigNumber,
     ): Promise<ethers.ContractReceipt | null> {
         try {
             const toWei = ethers.utils.parseEther(price);
@@ -35,7 +33,6 @@ export class Marketplace {
                 })
             ).wait();
         } catch (error) {
-            console.log(error);
             return null;
         }
     }

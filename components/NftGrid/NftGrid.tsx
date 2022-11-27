@@ -7,4 +7,4 @@ type Props = {
 const NftGrid: React.FC<Props> = ({ children }) => (
     <div className={styles.nftGrid}>{children}</div>
 );
-export { NftGrid };
+export default NftGrid;

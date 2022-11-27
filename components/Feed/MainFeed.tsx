@@ -1,57 +1,36 @@
-import {
-    QueryClient,
-    QueryClientProvider,
-    useInfiniteQuery,
-} from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
-import Card from '@/components/Card/Card';
-import { GridLoader } from '@/components/Loaders/GridLoader';
-import { NftGrid } from '@/components/NftGrid/NftGrid';
-import { useGetFeed } from '@/hooks/react-query/useGetFeed';
-import { NFT } from '@/types/nft.type';
+import Card from '@/components/Card';
+import { BarLoader } from '@/components/Loaders';
+import { GridLoader } from '@/components/Loaders';
+import NftGrid from '@/components/NftGrid';
+import { MarketplaceItemDto } from '@/types/nft.type';
 
 const PAGE_SIZE = 10;
 const MainFeed: React.FC = () => {
     const { ref, inView } = useInView();
-    // const { data, isLoading, error, refetch } = useGetFeed();
-
-    const {
-        status,
-        data,
-        error,
-        isFetching,
-        isFetchingNextPage,
-        isFetchingPreviousPage,
-        fetchNextPage,
-        refetch,
-        fetchPreviousPage,
-        hasNextPage,
-        hasPreviousPage,
-    } = useInfiniteQuery(
-        ['feed'],
-        async ({ pageParam = 0 }) => {
-            const res = await axios.get(
-                `/api/feed?page=${pageParam}&size=${PAGE_SIZE}`,
-            );
-            return res.data;
-        },
-        {
-            getPreviousPageParam: firstPage =>
-                firstPage.previousId ?? undefined,
-            getNextPageParam: (lastPage, allPages) => {
-                if (lastPage.length === PAGE_SIZE) {
-                    return allPages.length + 1;
-                }
-
-                return undefined;
-
-                // const nextPage = allPages.length + 1;
-                // return nextPage;
+    const { status, data, isFetchingNextPage, fetchNextPage } =
+        useInfiniteQuery(
+            ['feed'],
+            async ({ pageParam = 1 }) => {
+                const res = await axios.get(
+                    `/api/feed?page=${pageParam}&size=${PAGE_SIZE}`,
+                );
+                return res.data;
             },
-        },
-    );
+            {
+                getPreviousPageParam: firstPage =>
+                    firstPage.previousId ?? undefined,
+                getNextPageParam: (lastPage, allPages) => {
+                    if (lastPage.length === PAGE_SIZE) {
+                        return allPages.length + 1;
+                    }
+                    return undefined;
+                },
+            },
+        );
 
     useEffect(() => {
         if (inView) {
@@ -66,13 +45,12 @@ const MainFeed: React.FC = () => {
                 <NftGrid>
                     {data &&
                         data.pages.map(page => (
-                            // <Card cb={refetch} item={item} key={item.itemId} />
                             <React.Fragment key={page.nextId}>
                                 {page &&
-                                    page.map((item: NFT) => (
+                                    page.map((item: MarketplaceItemDto) => (
                                         <>
                                             <Card
-                                                cb={refetch}
+                                                // cb={refetch}
                                                 item={item}
                                                 key={item.itemId}
                                             />
@@ -82,7 +60,9 @@ const MainFeed: React.FC = () => {
                         ))}
                 </NftGrid>
             </div>
-            <div ref={ref}>{isFetchingNextPage && 'Loading'}</div>
+            <div className={'py-8'} ref={ref}>
+                {isFetchingNextPage && <BarLoader />}
+            </div>
         </>
     );
 };

@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { NftGrid } from '@/components/NftGrid/NftGrid';
+import NftGrid from '@/components/NftGrid';
 
 /* eslint-disable */
 const SkeletonItem:React.FC = () => {
@@ -36,7 +36,7 @@ const SkeletonItem:React.FC = () => {
   )
 }
 
-const GridLoader: React.FC = (props: any) => {
+const GridLoader: React.FC = () => {
   const times = useMemo(()=>{
     return Array.from(Array(10).keys())
   },[])

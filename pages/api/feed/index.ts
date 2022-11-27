@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { NFT } from '@/types/nft.type';
+import { MarketplaceItemDto } from '@/types/nft.type';
 
 export default async function handler(
     req: NextApiRequest,
-    res: NextApiResponse<NFT[]>,
+    res: NextApiResponse<MarketplaceItemDto[]>,
 ): Promise<void> {
     try {
         const { page, size } = req.query;
@@ -12,9 +12,11 @@ export default async function handler(
             process.env.CORE_API + `web3/items?page=${page}&size=${size}`,
         );
         if (response.status >= 400) {
-            return res.status(response.status).send(response.data as NFT[]);
+            return res
+                .status(response.status)
+                .send(response.data as MarketplaceItemDto[]);
         }
-        res.status(200).send(response.data as NFT[]);
+        res.status(200).send(response.data as MarketplaceItemDto[]);
     } catch (error) {
         res.status(500);
     }
