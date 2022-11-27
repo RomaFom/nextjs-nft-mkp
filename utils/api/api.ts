@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 
-import { ILoginForm } from '@/ignoreFolder/components/Forms/LoginForm/types';
-import { IFormSignUp } from '@/ignoreFolder/components/Forms/SignUpForm/types';
+import { ILoginForm } from '@/components/Forms/LoginForm/types';
+import { IFormSignUp } from '@/components/Forms/SignUpForm/types';
 
 import { IUserDataResponse, IUserResponse } from './types';
 

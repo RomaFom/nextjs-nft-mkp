@@ -1,4 +1,4 @@
-import { IFormSignUp } from '@/ignoreFolder/components/Forms/SignUpForm/types';
+import { IFormSignUp } from '@/components/Forms/SignUpForm/types';
 import { ApiAuth } from '@/utils/api';
 import { IUserResponse } from '@/utils/api/types';
 import type { NextApiRequest, NextApiResponse } from 'next';

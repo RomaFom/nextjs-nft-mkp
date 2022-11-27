@@ -9,7 +9,7 @@ import Button from '@/components/Button/Button';
 import { ILoginForm, loginSchema } from '@/components/Forms/LoginForm/types';
 import InputWrapper from '@/components/InputWrapper';
 import { useUser } from '@/providers/UserProvider/UserContext';
-import { IUserDataResponse, IUserResponse } from '@/utils/api/types';
+import { IUserResponse } from '@/utils/api/types';
 import { basicError } from '@/utils/notifications/notificationsCenter';
 const Login: React.FC = () => {
     const [cookie, setCookie] = useCookies(['tokenData']);

@@ -28,17 +28,17 @@ const Card: React.FC<Props> = ({ item, cb }) => {
                     height={400}
                     priority={true}
                     quality={50}
-                    src={item.metadata.image}
+                    src={item.Nft.image}
                     width={400}
                 />
-                <h2>{item.metadata.name}</h2>
+                <h2>{item.Nft.name}</h2>
                 <p className={cn(styles.description, 'min-h-[75px]')}>
-                    {item.metadata.description}
+                    {item.Nft.description}
                 </p>
                 <div className={cn(styles.tokenInfo, 'pb-3 gap-x-3')}>
                     <div className={styles.price}>
                         <ins>◘</ins>
-                        <p>{item.price} ETH</p>
+                        <p>{item.Price} ETH</p>
                     </div>
                     {user?.token ? (
                         <button
@@ -49,8 +49,8 @@ const Card: React.FC<Props> = ({ item, cb }) => {
                                 }
                                 if (wallet && user?.token) {
                                     await Mkp.buyItem(
-                                        item.itemId,
-                                        item.finalPrice.toString(),
+                                        item.ItemId,
+                                        item.TotalPrice.toString(),
                                     );
                                     cb && cb();
                                 }

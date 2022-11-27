@@ -5,13 +5,13 @@ export interface NftMetadataDto {
 }
 
 export interface MarketplaceItemDto {
-    itemId: number;
-    nftAddress: string;
-    tokenId: number;
-    price: number;
-    listingPrice: number;
-    finalPrice: number;
-    seller: string;
-    isSold: boolean;
-    metadata: NftMetadataDto;
+    ItemId: number;
+    // nftAddress: string;
+    TokenId: number;
+    Price: string;
+    ListingPrice: string;
+    TotalPrice: string;
+    Seller: string;
+    IsSold: boolean;
+    Nft: NftMetadataDto;
 }

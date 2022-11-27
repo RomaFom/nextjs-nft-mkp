@@ -1,6 +1,6 @@
 import React from 'react';
 
-import SignUp from '@/ignoreFolder/components/Forms/SignUpForm/SignUp';
+import SignUp from '@/components/Forms/SignUpForm/SignUp';
 
 const Index: React.FC = () => (
     <>
