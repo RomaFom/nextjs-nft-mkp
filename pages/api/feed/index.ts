@@ -9,7 +9,8 @@ export default async function handler(
     try {
         const { page, size } = req.query;
         const response = await axios.get(
-            process.env.CORE_API + 'marketplace/get-all',
+            process.env.CORE_API +
+                `marketplace/get-all?page=${page}&size=${size}`,
 
             // process.env.CORE_API + `web3/items?page=${page}&size=${size}`,
         );

@@ -52,7 +52,7 @@ const MainFeed: React.FC = () => {
                                             <Card
                                                 // cb={refetch}
                                                 item={item}
-                                                key={item.ItemId}
+                                                key={item.item_id}
                                             />
                                         </>
                                     ))}
