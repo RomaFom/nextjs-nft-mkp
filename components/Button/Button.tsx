@@ -7,15 +7,17 @@ type Props = {
     onClick?: () => void;
     type: 'button' | 'submit' | 'reset';
     className?: string;
+    buttonStyle?: 'primary' | 'secondary' | 'tertiary' | 'buy';
 };
 const Button: React.FC<Props> = ({
     children,
     disabled,
     onClick,
     type = 'button',
+    buttonStyle = 'primary',
     className,
 }) => (
-    <span className={styles.appBtn}>
+    <span className={styles[buttonStyle]}>
         <button
             className={className}
             disabled={disabled}

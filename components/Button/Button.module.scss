@@ -1,5 +1,11 @@
-.appBtn {
+.primary {
   button {
     @apply py-2 px-3 bg-dark-medium border-main-green border-2 rounded-2xl border-solid w-32 text-light-grey font-normal text-base;
+  }
+}
+
+.buy{
+  button {
+    @apply bg-gradient-to-r from-purple-400 to-pink-500 text-white font-bold py-2 px-4 rounded-full whitespace-nowrap;
   }
 }

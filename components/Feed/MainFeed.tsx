@@ -3,6 +3,7 @@ import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import Card from '@/components/Card';
+import BuyNftButton from '@/components/Card/ActionButtons/BuyNftButton';
 import { BarLoader } from '@/components/Loaders';
 import { GridLoader } from '@/components/Loaders';
 import NftGrid from '@/components/NftGrid';
@@ -11,7 +12,7 @@ import { MarketplaceItemDto } from '@/types/nft.type';
 const PAGE_SIZE = 10;
 const MainFeed: React.FC = () => {
     const { ref, inView } = useInView();
-    const { status, data, isFetchingNextPage, fetchNextPage } =
+    const { status, data, isFetchingNextPage, fetchNextPage, refetch } =
         useInfiniteQuery(
             ['feed'],
             async ({ pageParam = 1 }) => {
@@ -48,13 +49,16 @@ const MainFeed: React.FC = () => {
                             <React.Fragment key={page.nextId}>
                                 {page &&
                                     page.map((item: MarketplaceItemDto) => (
-                                        <>
-                                            <Card
-                                                // cb={refetch}
-                                                item={item}
-                                                key={item.item_id}
-                                            />
-                                        </>
+                                        <Card
+                                            actionButton={
+                                                <BuyNftButton
+                                                    cb={refetch}
+                                                    item={item}
+                                                />
+                                            }
+                                            item={item}
+                                            key={item.item_id}
+                                        />
                                     ))}
                             </React.Fragment>
                         ))}
