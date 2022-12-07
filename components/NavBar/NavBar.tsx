@@ -40,15 +40,21 @@ const NavBar: React.FC = () => {
                     <Link href={'/'}>Home</Link>
                 </button>
                 <div className={styles.dropdowns}>
-                    <div className={styles.dropdown}>
-                        <button className={styles.button} type={'button'}>
-                            NFT&apos;s <BsChevronDown />
-                        </button>
-                        <div className={styles.dropdownMenu}>
-                            <button type={'button'}>My NFT&apos;s</button>
-                            <button type={'button'}>Listed NFT&apos;s</button>
+                    {user && (
+                        <div className={styles.dropdown}>
+                            <button className={styles.button} type={'button'}>
+                                NFT&apos;s <BsChevronDown />
+                            </button>
+                            <div className={styles.dropdownMenu}>
+                                <button type={'button'}>
+                                    <Link href={'/my-nfts'}>My NFT&apos;s</Link>
+                                </button>
+                                {/*<button type={'button'}>*/}
+                                {/*    Listed NFT&apos;s*/}
+                                {/*</button>*/}
+                            </div>
                         </div>
-                    </div>
+                    )}
 
                     {!user && (
                         <>

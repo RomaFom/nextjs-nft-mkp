@@ -6,7 +6,6 @@ import '@/styles/globals.css';
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export default function App({ Component, pageProps }: AppProps) {
     return (
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         <>
             <Head>
                 <title>NFT Marketplace</title>
