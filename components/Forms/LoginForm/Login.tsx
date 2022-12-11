@@ -1,7 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import cn from 'classnames';
 import { useRouter } from 'next/navigation';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useForm } from 'react-hook-form';
 
@@ -13,6 +13,7 @@ import { IUserResponse } from '@/utils/api/types';
 import { basicError } from '@/utils/notifications/notificationsCenter';
 const Login: React.FC = () => {
     const [cookie, setCookie] = useCookies(['tokenData']);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const router = useRouter();
     const { user, setUser } = useUser();
 
@@ -32,6 +33,7 @@ const Login: React.FC = () => {
 
     const onSubmit = async (values: ILoginForm): Promise<void> => {
         try {
+            setIsSubmitting(true);
             const res: IUserResponse = await (
                 await fetch('/api/auth/login', {
                     method: 'POST',
@@ -50,6 +52,8 @@ const Login: React.FC = () => {
             });
         } catch (err) {
             console.log('error', err);
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -76,7 +80,13 @@ const Login: React.FC = () => {
                     />
                 </InputWrapper>
                 <span className="flex justify-center pt-2nex">
-                    <Button type="submit">Login</Button>
+                    <Button
+                        disabled={isSubmitting}
+                        showLoader={isSubmitting}
+                        type="submit"
+                    >
+                        Login
+                    </Button>
                 </span>
             </div>
         </form>

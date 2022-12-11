@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { MarketplaceItemDto } from '@/types/nft.type';
 
@@ -9,7 +9,7 @@ export default async function handler(
     try {
         const body = req.body;
         const token = req.headers.authorization;
-        const response = await axios.post(
+        const response: AxiosResponse = await axios.post(
             process.env.CORE_API + 'transaction/buy-item',
             {
                 ...body,

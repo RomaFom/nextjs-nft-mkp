@@ -18,6 +18,7 @@ import { basicError } from '@/utils/notifications/notificationsCenter';
 const SignUp: React.FC = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [cookie, setCookie] = useCookies(['tokenData']);
+    const [loading, setLoading] = useState(false);
     const router = useRouter();
     const { user, setUser } = useUser();
     const {
@@ -97,7 +98,11 @@ const SignUp: React.FC = () => {
                     </InputWrapper>
 
                     <span className="flex justify-center pt-2nex">
-                        <Button disabled={isSubmitting} type="submit">
+                        <Button
+                            disabled={isSubmitting}
+                            showLoader={isSubmitting}
+                            type="submit"
+                        >
                             Sign Up
                         </Button>
                     </span>

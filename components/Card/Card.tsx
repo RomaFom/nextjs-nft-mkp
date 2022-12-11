@@ -20,12 +20,12 @@ const Card: React.FC<Props> = ({ item, actionButton }) => (
                 height={400}
                 priority={true}
                 quality={50}
-                src={item.image}
+                src={item.nft.image}
                 width={400}
             />
-            <h2>{item.name}</h2>
+            <h2>{item.nft.name}</h2>
             <p className={cn(styles.description, 'min-h-[75px]')}>
-                {item.description}
+                {item.nft.description}
             </p>
             <div className={cn(styles.tokenInfo, 'pb-3 gap-x-3')}>
                 <div className={styles.price}>

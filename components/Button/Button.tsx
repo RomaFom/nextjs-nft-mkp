@@ -1,4 +1,6 @@
+import cn from 'classnames';
 import React from 'react';
+import { LineDots } from '@/components/Loaders';
 
 import styles from './Button.module.scss';
 type Props = {
@@ -8,6 +10,7 @@ type Props = {
     type: 'button' | 'submit' | 'reset';
     className?: string;
     buttonStyle?: 'primary' | 'secondary' | 'tertiary' | 'buy';
+    showLoader: boolean;
 };
 const Button: React.FC<Props> = ({
     children,
@@ -16,10 +19,11 @@ const Button: React.FC<Props> = ({
     type = 'button',
     buttonStyle = 'primary',
     className,
+    showLoader,
 }) => (
     <span className={styles[buttonStyle]}>
         <button
-            className={className}
+            className={cn(className, 'flex flex-wrap justify-center gap-2')}
             disabled={disabled}
             onClick={() => {
                 if (onClick) {
@@ -29,7 +33,7 @@ const Button: React.FC<Props> = ({
             // eslint-disable-next-line react/button-has-type
             type={type || 'button'}
         >
-            {children}
+            {showLoader ? <LineDots height={24} width={40} /> : children}
         </button>
     </span>
 );

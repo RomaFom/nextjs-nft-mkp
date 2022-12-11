@@ -15,7 +15,7 @@ const MainFeed: React.FC = () => {
     const { status, data, isFetchingNextPage, fetchNextPage, refetch } =
         useInfiniteQuery(
             ['feed'],
-            async ({ pageParam = 1 }) => {
+            async ({ pageParam = 0 }) => {
                 const res = await axios.get(
                     `/api/feed?page=${pageParam}&size=${PAGE_SIZE}`,
                 );
@@ -26,7 +26,7 @@ const MainFeed: React.FC = () => {
                     firstPage.previousId ?? undefined,
                 getNextPageParam: (lastPage, allPages) => {
                     if (lastPage.length === PAGE_SIZE) {
-                        return allPages.length + 1;
+                        return allPages.length;
                     }
                     return undefined;
                 },
@@ -45,8 +45,9 @@ const MainFeed: React.FC = () => {
                 {status === 'loading' && <GridLoader />}
                 <NftGrid>
                     {data &&
-                        data.pages.map(page => (
-                            <React.Fragment key={page.nextId}>
+                        data.pages.map((page, index) => (
+                            // eslint-disable-next-line react/no-array-index-key
+                            <React.Fragment key={index}>
                                 {page &&
                                     page.map((item: MarketplaceItemDto) => (
                                         <Card

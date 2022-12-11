@@ -6,18 +6,26 @@
 // }
 
 export interface MarketplaceItemDto {
-    item_id: number;
-    // nftAddress: string;
-    token_id: number;
-    price: string;
-    listing_price: string;
-    total_price: string;
-    seller: string;
+    createdAt: Date;
+    id: number;
     is_sold: boolean;
-    image: string;
-    name: string;
-    description: string;
-    owner: string;
+    item_id: number;
+    listing_price: number;
+    nft: {
+        createdAt: Date;
+        description: string;
+        id: number;
+        image: string;
+        name: string;
+        nft_id: number;
+        owner: string;
+        updatedAt: Date;
+    };
+    nft_id: number;
+    price: number;
+    seller: string;
+    total_price: number;
+    updatedAt: Date;
 }
 
 //   "item_id": 4,
