@@ -36,8 +36,6 @@ const Provider: React.FC<Props> = ({ children }) => {
                 <UserProvider>
                     <DappContext.Provider value={dappCtxValues}>
                         {children}
-                        {/*<NavBar />*/}
-                        {/*<main className="pt-20 px-3 h-full">{children}</main>*/}
                     </DappContext.Provider>
                 </UserProvider>
                 <ReactQueryDevtools initialIsOpen={false} />

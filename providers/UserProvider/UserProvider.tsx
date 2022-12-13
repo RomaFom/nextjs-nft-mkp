@@ -26,9 +26,7 @@ const UserProvider: React.FC<Props> = ({ children }) => {
     };
 
     useEffect(() => {
-        if (!cookie.tokenData) {
-            router.push('/');
-        } else {
+        if (cookie.tokenData) {
             fetch('/api/auth/get-user', {
                 method: 'GET',
                 headers: {
