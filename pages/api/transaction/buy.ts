@@ -1,10 +1,9 @@
 import axios, { AxiosResponse } from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { MarketplaceItemDto } from '@/types/nft.type';
 
 export default async function handler(
     req: NextApiRequest,
-    res: NextApiResponse<MarketplaceItemDto[] | any>,
+    res: NextApiResponse,
 ): Promise<void> {
     try {
         const body = req.body;
@@ -20,12 +19,8 @@ export default async function handler(
                 },
             },
         );
-        if (response.status >= 400) {
-            return res
-                .status(response.status)
-                .send(response.data as MarketplaceItemDto[]);
-        }
-        res.status(200).send(response.data as MarketplaceItemDto[]);
+
+        res.status(200).send(response.data);
     } catch (error) {
         console.log('error', error);
         res.status(500).send({ message: 'Internal server error' });

@@ -1,31 +1,27 @@
 import axios from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { MarketplaceItemDto } from '@/types/nft.type';
 
 export default async function handler(
     req: NextApiRequest,
-    res: NextApiResponse<MarketplaceItemDto[] | any>,
+    res: NextApiResponse,
 ): Promise<void> {
     try {
-        // const { page, size } = req.query;
-        const wallet = req.headers.wallet as string;
-        const token = req.headers.authorization as string;
+        const { page, size } = req.query;
+        const wallet = req.cookies.wallet;
+        const token = req.cookies.tokenData;
+
         const response = await axios.get(
-            process.env.CORE_API + 'marketplace/my-purchases',
+            process.env.CORE_API +
+                `marketplace/my-purchases?page=${page}&size=${size}`,
             {
                 headers: {
-                    Authorization: token,
+                    Authorization: `Bearer ${token}`,
                     wallet: wallet,
                 },
             },
         );
 
-        if (response.status >= 400) {
-            return res
-                .status(response.status)
-                .send(response.data as MarketplaceItemDto[]);
-        }
-        res.status(200).send(response.data as MarketplaceItemDto[]);
+        res.status(200).send(response.data);
     } catch (error) {
         res.status(500).send('error');
     }

@@ -1,6 +1,7 @@
 import { ethers } from 'ethers';
 import React, { useState } from 'react';
 
+import { useCookies } from 'react-cookie';
 import MarketplaceAddress from '@/contracts/Marketplace-address.json';
 import MarketplaceAbi from '@/contracts/Marketplace.json';
 import NFTAddress from '@/contracts/NFT-address.json';
@@ -16,6 +17,7 @@ interface IUseWeb3 {
 }
 
 export const UseWeb3 = (): IUseWeb3 => {
+    const [cookie, setCookie, removeCookie] = useCookies(['wallet']);
     const [account, setAccount] = useState<string>('');
     const [loading, setLoading] = useState(false);
     const [owner, setOwner] = useState('');
@@ -38,9 +40,11 @@ export const UseWeb3 = (): IUseWeb3 => {
         });
         if (!accounts || accounts.length === 0) {
             setAccount('');
+            removeCookie('wallet');
             return;
         }
         setAccount(accounts[0]);
+        setCookie('wallet', accounts[0], { path: '/' });
 
         const signer = await getSigner();
         if (!signer) {
@@ -109,6 +113,7 @@ export const UseWeb3 = (): IUseWeb3 => {
             await web3Handler();
             return;
         }
+        removeCookie('wallet');
         setAccount('');
         // await connectWithDummyAccount();
     };

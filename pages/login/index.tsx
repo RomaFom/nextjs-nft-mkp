@@ -1,8 +1,8 @@
+import { GetServerSideProps } from 'next';
 import React from 'react';
 
 import Login from '@/components/Forms/LoginForm/Login';
 import Layout from '@/components/Layout/Layout';
-import { parseCookie } from '@/utils/api/parseCookie';
 
 const Index: React.FC = () => (
     <>
@@ -13,19 +13,18 @@ const Index: React.FC = () => (
 );
 export default Index;
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export async function getServerSideProps(context: any) {
-    const cookies = context.req.headers.cookie || '';
+export const getServerSideProps: GetServerSideProps = async context => {
+    const token = context.req.cookies.tokenData;
 
-    const parsed = parseCookie(cookies);
-    if (parsed) {
+    if (token) {
         return {
             redirect: {
                 destination: '/',
             },
+            props: {},
         };
     }
     return {
         props: {},
     };
-}
+};

@@ -1,5 +1,3 @@
-import { useInfiniteQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import Card from '@/components/Card';
@@ -7,31 +5,13 @@ import BuyNftButton from '@/components/Card/ActionButtons/BuyNftButton';
 import { BarLoader } from '@/components/Loaders';
 import { GridLoader } from '@/components/Loaders';
 import NftGrid from '@/components/NftGrid';
+import { useGetFeed } from '@/hooks/react-query/useGetFeed';
 import { MarketplaceItemDto } from '@/types/nft.type';
 
-const PAGE_SIZE = 10;
 const MainFeed: React.FC = () => {
     const { ref, inView } = useInView();
     const { status, data, isFetchingNextPage, fetchNextPage, refetch } =
-        useInfiniteQuery(
-            ['feed'],
-            async ({ pageParam = 0 }) => {
-                const res = await axios.get(
-                    `/api/feed?page=${pageParam}&size=${PAGE_SIZE}`,
-                );
-                return res.data;
-            },
-            {
-                getPreviousPageParam: firstPage =>
-                    firstPage.previousId ?? undefined,
-                getNextPageParam: (lastPage, allPages) => {
-                    if (lastPage.length === PAGE_SIZE) {
-                        return allPages.length;
-                    }
-                    return undefined;
-                },
-            },
-        );
+        useGetFeed();
 
     useEffect(() => {
         if (inView) {

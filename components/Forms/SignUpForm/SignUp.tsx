@@ -1,7 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import axios, { AxiosResponse } from 'axios';
 import cn from 'classnames';
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useForm } from 'react-hook-form';
 
@@ -11,16 +12,12 @@ import {
     signUpSchema,
 } from '@/components/Forms/SignUpForm/types';
 import InputWrapper from '@/components/InputWrapper';
-import { useUser } from '@/providers/UserProvider/UserContext';
-import { IUserResponse } from '@/utils/api/types';
-import { basicError } from '@/utils/notifications/notificationsCenter';
 
 const SignUp: React.FC = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [cookie, setCookie] = useCookies(['tokenData']);
-    const [loading, setLoading] = useState(false);
     const router = useRouter();
-    const { user, setUser } = useUser();
+
     const {
         register,
         handleSubmit,
@@ -29,40 +26,31 @@ const SignUp: React.FC = () => {
         resolver: yupResolver(signUpSchema),
     });
 
-    useEffect(() => {
-        if (user) {
-            router.push('/');
-        }
-    }, [user]);
+    const onSubmit = useCallback(
+        async (values: IFormInputValues): Promise<void> => {
+            try {
+                setIsSubmitting(true);
+                const {
+                    data: { data },
+                }: AxiosResponse = await axios.post(
+                    '/api/auth/sign-up',
+                    values,
+                );
 
-    const onSubmit = async (values: IFormInputValues): Promise<void> => {
-        try {
-            setIsSubmitting(true);
-            const res: IUserResponse = await (
-                await fetch('/api/auth/sign-up', {
-                    method: 'POST',
-                    body: JSON.stringify(values),
-                })
-            ).json();
-            if (res.status >= 400) {
-                basicError(res.error?.message || 'Something went wrong');
-                return;
+                setCookie('tokenData', data.token, {
+                    path: '/',
+                    maxAge: 3600,
+                    sameSite: true,
+                });
+                router.push('/');
+            } catch (err: any) {
+                console.log(err);
+            } finally {
+                setIsSubmitting(false);
             }
-            setCookie('tokenData', res.data?.token, {
-                path: '/',
-                maxAge: 3600,
-                sameSite: true,
-            });
-        } catch (err: any) {
-            console.log(err);
-        } finally {
-            setIsSubmitting(false);
-        }
-    };
-
-    if (user) {
-        return null;
-    }
+        },
+        [router, setCookie],
+    );
 
     return (
         <>

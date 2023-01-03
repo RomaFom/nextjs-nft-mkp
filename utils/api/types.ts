@@ -14,7 +14,10 @@ export interface IUserResponse extends BaseResponse {
 
 export interface IUserDataResponse extends BaseResponse {
     data?: {
-        id: number;
-        username: string;
+        user: {
+            id: number;
+            username: string;
+            wallet: string;
+        };
     };
 }

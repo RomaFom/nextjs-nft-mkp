@@ -1,9 +1,9 @@
+import axios, { AxiosResponse } from 'axios';
 import { useRouter } from 'next/navigation';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useLayoutEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { IUserState } from '@/providers/UserProvider/UserContext';
 import { UserContext } from '@/providers/UserProvider/UserContext';
-import { IUserDataResponse } from '@/utils/api/types';
 
 type Props = {
     children: React.ReactNode;
@@ -17,7 +17,32 @@ const UserProvider: React.FC<Props> = ({ children }) => {
         removeCookie('tokenData');
         setCtxUser(null);
         router.push('/');
-    }, []);
+    }, [removeCookie]);
+
+    const handleLogin = useCallback(async () => {
+        try {
+            if (cookie.tokenData) {
+                const { tokenData } = cookie;
+                const { data }: AxiosResponse = await axios.get(
+                    '/api/auth/get-user',
+                    {
+                        headers: {
+                            Authorization: tokenData,
+                        },
+                    },
+                );
+
+                const newUser = {
+                    ...data.data.user,
+                    token: tokenData,
+                };
+
+                setCtxUser(newUser);
+            }
+        } catch (err) {
+            handleLogout();
+        }
+    }, [cookie, handleLogout]);
 
     const userValues = {
         user: ctxUser,
@@ -25,28 +50,10 @@ const UserProvider: React.FC<Props> = ({ children }) => {
         clearUser: handleLogout,
     };
 
-    useEffect(() => {
-        if (cookie.tokenData) {
-            fetch('/api/auth/get-user', {
-                method: 'GET',
-                headers: {
-                    Authorization: cookie.tokenData,
-                },
-            })
-                .then(res => res.json())
-                .then((data: IUserDataResponse) => {
-                    if (data.status >= 400 || !data.data) {
-                        handleLogout();
-                        return;
-                    }
-                    const newUser = {
-                        ...data.data,
-                        token: cookie.tokenData,
-                    };
-                    setCtxUser(newUser);
-                });
-        }
-    }, [cookie]);
+    useLayoutEffect(() => {
+        handleLogin();
+    }, [cookie.tokenData]);
+
     return (
         <>
             <UserContext.Provider value={userValues}>

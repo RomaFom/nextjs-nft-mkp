@@ -8,12 +8,8 @@ export default async function handler(
     res: NextApiResponse<IUserResponse>,
 ): Promise<void> {
     try {
-        const body: IFormSignUp = JSON.parse(req.body);
+        const body: IFormSignUp = req.body;
         const response = await ApiAuth.login(body);
-        if (response.status >= 400) {
-            return res.status(response.status).send(response);
-        }
-
         res.status(200).send(response);
     } catch (error) {
         console.log(error);

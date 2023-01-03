@@ -3,6 +3,7 @@ import { createContext, useContext } from 'react';
 export interface IUserState {
     id: number;
     username: string;
+    wallet: string;
     token: string;
 }
 
