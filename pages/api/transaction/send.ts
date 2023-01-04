@@ -7,15 +7,18 @@ export default async function handler(
 ): Promise<void> {
     try {
         const body = req.body;
-        const token = req.headers.authorization;
+        const wallet = req.cookies.wallet;
+        const token = req.cookies.tokenData;
+
         const response: AxiosResponse = await axios.post(
-            process.env.CORE_API + 'transaction/buy-item',
+            process.env.CORE_API + 'transaction',
             {
                 ...body,
             },
             {
                 headers: {
-                    Authorization: token,
+                    Authorization: `Bearer ${token}`,
+                    wallet: wallet,
                 },
             },
         );

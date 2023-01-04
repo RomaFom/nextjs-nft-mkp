@@ -8,7 +8,7 @@ import { MarketplaceItemDto } from '@/types/nft.type';
 
 interface Props {
     item: MarketplaceItemDto;
-    cb?: () => void;
+    cb: () => Promise<void>;
 }
 const BuyNftButton: React.FC<Props> = ({ item, cb }) => {
     const [isLoading, setIsLoading] = useState(false);
@@ -26,28 +26,16 @@ const BuyNftButton: React.FC<Props> = ({ item, cb }) => {
                 return router.push('/login');
             }
             if (wallet && user?.token) {
-                const res = await Mkp.buyItem(
-                    item.item_id,
-                    item.total_price.toString(),
-                );
+                const res = await Mkp.buyItem(item.item_id, item.total_price);
                 if (!res) {
                     return;
                 }
-                await axios.post(
-                    'api/transaction/buy',
-                    {
-                        tx_hash: res?.transactionHash,
-                        item_id: item.item_id,
-                        nft_id: item.token_id,
-                        wallet: wallet,
-                    },
-                    {
-                        headers: {
-                            Authorization: `Bearer ${user?.token}`,
-                        },
-                    },
-                );
-                cb && (await cb());
+                await axios.post('api/transaction/send', {
+                    tx_hash: res?.transactionHash,
+                    item_id: item.item_id,
+                    nft_id: item.token_id,
+                });
+                await cb();
             }
         } catch (error) {
             console.log(error);

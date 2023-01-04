@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import Card from '@/components/Card';
 import BuyNftButton from '@/components/Card/ActionButtons/BuyNftButton';
+import ListNftButton from '@/components/Card/ActionButtons/ListNftButton';
 import { BarLoader, GridLoader } from '@/components/Loaders';
 import NftGrid from '@/components/NftGrid';
 import useGetMyNfts from '@/hooks/react-query/useGetMyNfts';
@@ -24,14 +25,14 @@ const MyNfts: React.FC = () => {
                 {status === 'loading' && <GridLoader />}
                 <NftGrid>
                     {data &&
-                        data.pages.map((page, index) => (
+                        data.pages.map((page: any, index: number) => (
                             // eslint-disable-next-line react/no-array-index-key
                             <React.Fragment key={index}>
                                 {page &&
                                     page.map((item: MarketplaceItemDto) => (
                                         <Card
                                             actionButton={
-                                                <BuyNftButton
+                                                <ListNftButton
                                                     cb={refetch}
                                                     item={item}
                                                 />

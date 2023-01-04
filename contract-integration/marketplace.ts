@@ -37,6 +37,23 @@ export class Marketplace {
         }
     }
 
+    async listItem(
+        itemId: number,
+        price: string,
+    ): Promise<ethers.ContractReceipt | null> {
+        try {
+            const toWei = ethers.utils.parseEther(price);
+            return await (
+                await this.contract.listItem(itemId, toWei, {
+                    gasLimit: 1000000,
+                })
+            ).wait();
+        } catch (error) {
+            console.log('error', error);
+            return null;
+        }
+    }
+
     //   const totalPrice = await marketplaceContract?.getFinalPrice(
     //             item.itemId
     //           );
